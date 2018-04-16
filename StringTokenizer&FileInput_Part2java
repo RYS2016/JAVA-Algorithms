@@ -1,0 +1,66 @@
+mport java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.StringTokenizer;
+
+public class Test {
+
+	private static Object trow;
+
+	public static void main(String[] args) {
+		
+		String inputFileName = "data.txt";
+		FileReader fileReader = null;
+		
+		try {
+			fileReader = new FileReader(inputFileName);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		BufferedReader reader = new BufferedReader(fileReader);
+		String input;
+		try {
+			input = reader.readLine();
+			while (input != null) 
+			{
+				processInputData(input);
+				input = reader.readLine();
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			fileReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+		
+		private static void processInputData (String data) {
+			StringTokenizer st = new StringTokenizer (data, ",");
+			String name = st.nextToken();
+			Senator currentSenator = new Senator(name);
+			
+			String yearsinOffice = st.nextToken();
+			try {
+				int years = Integer.parseInt(yearsinOffice);
+				currentSenator.setYearsinOffice(years);
+			}
+			catch (NumberFormatException e)
+			{
+				System.out.println(-99);
+			}			
+				
+			String party = st.nextToken();
+			currentSenator.setParty(party);
+			
+			String state = st.nextToken();
+			currentSenator.setState(state);
+			
+			System.out.println(currentSenator.toString());
+			
+		}
+}
